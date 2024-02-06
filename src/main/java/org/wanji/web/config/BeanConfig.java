@@ -20,7 +20,6 @@ import org.springframework.cache.caffeine.CaffeineCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.wanji.commons.util.DateUtils;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -55,7 +54,7 @@ public class BeanConfig {
             timeModule.addDeserializer(LocalTime.class, new LocalTimeDeserializer(DateTimeFormatter.ISO_LOCAL_TIME));
 
             builder.modules(longModule, timeModule);
-            builder.postConfigurer(mapper -> {
+            builder.configure(mapper -> {
                 mapper.configure(SerializationFeature.FAIL_ON_SELF_REFERENCES, true);//忽略循环引用
                 mapper.configure(SerializationFeature.WRITE_SELF_REFERENCES_AS_NULL, true);//循环引用写入null
                 mapper.setSerializationInclusion(Include.NON_NULL);
